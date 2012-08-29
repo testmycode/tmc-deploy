@@ -28,7 +28,7 @@ private
   def apply_tailoring
     FileUtils.cp(@tailoring_file, tailoring_dir)
     File.open(tailoring_dir + 'SelectedTailoring.properties', 'w') do |f|
-      f.puts("defaultTailoring=fi.helsinki.cs.tmc.tailoring.#{@tailoring_file.basename}")
+      f.puts("defaultTailoring=fi.helsinki.cs.tmc.tailoring.#{@tailoring_file.basename('.java')}")
     end
   end
 
