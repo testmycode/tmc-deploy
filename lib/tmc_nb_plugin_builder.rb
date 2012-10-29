@@ -10,10 +10,11 @@ class TmcNbPluginBuilder
     @dir = Pathname(dir).realpath
     @tailoring_file = Pathname(options[:tailoring_file]).realpath if options[:tailoring_file]
 
+    nbplatform_name = options[:nbplatform_name] || 'default'
     nbdir = Pathname(options[:netbeans_dir]).realpath
     defs = {
-      'nbplatform.default.harness.dir' => "#{nbdir}/harness",
-      'nbplatform.default.netbeans.dest.dir' => "#{nbdir}"
+      "nbplatform.#{nbplatform_name}.harness.dir" => "#{nbdir}/harness",
+      "nbplatform.#{nbplatform_name}.netbeans.dest.dir" => "#{nbdir}"
     }
     @ant_project = AntProject.new(@dir, defs)
   end
