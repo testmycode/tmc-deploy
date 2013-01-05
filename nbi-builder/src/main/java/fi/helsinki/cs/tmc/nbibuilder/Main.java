@@ -178,8 +178,7 @@ public class Main {
 
         props.put("install.dir.name", brandingToken);
 
-        //mkleint: this is a flawed pattern! cannot make any assumption on multimodule layout
-        props.put("suite.nbi.product.uid", projectName.toLowerCase(Locale.ENGLISH));
+        props.put("suite.nbi.product.uid", brandingToken);
 
         props.put("suite.props.app.title", projectName);
 
