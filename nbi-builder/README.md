@@ -5,7 +5,6 @@ It's a bit inconvenient to use. Here's an example.
 
     ARGS="--zip-name test_program \
       --project-dir $HOME/NetBeansProjects/test_program \
-      --project-version 0.1 \
       --project-name TestProgram \
       --harness-dir /opt/netbeans-7.2/harness \
       --pack200 false"

@@ -55,13 +55,6 @@ import org.codehaus.plexus.util.FileUtils;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        /*
-Command:
-mvn install && mvn exec:java -Dant.home=/usr/share/ant -Dexec.args="--branding-token suite1 --final-name suite1 --output-dir $HOME/NetBeansProjects/suite1/dist --project-dir $HOME/NetBeansProjects/suite1 --project-version 0.1 --project-name suite1 --harness-dir $HOME/root/opt/nbplatform/netbeans-7.2/harness --pack200 false"
-         */
-        
-        //System.setProperty("ant.home", "/usr/share/ant"); // TODO: FIXME
-        
         Main main = new Main();
         JCommander jc = new JCommander(main, args);
         if (main.help) {
@@ -73,8 +66,6 @@ mvn install && mvn exec:java -Dant.home=/usr/share/ant -Dexec.args="--branding-t
     private static final Log log = new SystemStreamLog();
     @Parameter(names = "--project-name", required = true)
     private String projectName;
-    @Parameter(names = "--project-version", required = true)
-    private String projectVersion;
     @Parameter(names = "--help", help = true)
     public boolean help = false;
     /**
@@ -190,14 +181,9 @@ mvn install && mvn exec:java -Dant.home=/usr/share/ant -Dexec.args="--branding-t
         //mkleint: this is a flawed pattern! cannot make any assumption on multimodule layout
         props.put("suite.nbi.product.uid", projectName.toLowerCase(Locale.ENGLISH));
 
-        props.put("suite.props.app.title", (projectName + " " + projectVersion).replaceAll("-SNAPSHOT", ""));
+        props.put("suite.props.app.title", projectName);
 
-        String appVersion = projectVersion.replaceAll("-SNAPSHOT", "");
-        props.put("suite.nbi.product.version.short", appVersion);
-        while (appVersion.split("\\.").length < 5) {
-            appVersion += ".0";
-        }
-        props.put("suite.nbi.product.version", appVersion);
+        // Could fill in suite.nbi.product.version[.short] too, but it's not required
 
         props.put("nbi.stub.location", new File(harnessDir, "nbi/stub").getAbsolutePath().replace("\\", "/"));
 
