@@ -1,5 +1,10 @@
 A deployment script library for TMC's NetBeans plugins.
 
+Building:
+
+    cd nbi-builder
+    mvn package
+
 Usage:
 
 ```ruby
