@@ -57,13 +57,8 @@ EOS
 
   # Operations available in deployment blocks
 
-  def git_clone_or_open(dir, source)
-    dir = Pathname(dir)
-    if dir.exist?
-      GitRepo.new(dir)
-    else
-      GitRepo.clone(source, dir)
-    end
+  def git_clone(dir, source)
+    GitRepo.clone(source, dir)
   end
 
   def build_tmc_nb_plugin(dir, options)
