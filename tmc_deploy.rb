@@ -65,26 +65,31 @@ EOS
     TmcNbPluginBuilder.new(dir, options).build
   end
 
-  def replace_dir_quickly(from, to)
+  def stage_nb_plugin(name, staging_dir)
+    mv_if_exists("#{name}/build/updates", staging_dir + '/updates')
+    mv_if_exists("#{name}/dist/tmc_netbeans.zip", staging_dir + "/updates/#{name}.zip")
+    mv_if_exists("#{name}/dist/tmc_netbeans.app", staging_dir + "/updates/#{name}.app")
+    mv_if_exists("#{name}/dist/tmc_netbeans-linux.sh", staging_dir + "/updates/#{name}-linux.sh")
+    mv_if_exists("#{name}/dist/tmc_netbeans-macosx.tgz", staging_dir + "/updates/#{name}-macosx.tgz")
+    mv_if_exists("#{name}/dist/tmc_netbeans-windows.exe", staging_dir + "/updates/#{name}-windows.exe")
+  end
+
+  def mv_if_exists(from, to)
+    FileUtils.mv(from, to) if File.exist?(from)
+  end
+
+  def move_dir_over(from, to)
     randstr = (Random.new.rand * 1000).to_i
-    newdir = "#{to}.new_#{randstr}"
-    olddir = "#{to}.old_#{randstr}"
+    backup = "#{to}.bak_#{randstr}"
 
+    FileUtils.mv(to, backup)
     begin
-      FileUtils.cp_r(from, newdir, :preserve => true)
+      FileUtils.mv(from, to)
     rescue => ex
-      FileUtils.rm_rf(newdir)
+      FileUtils.mv(backup, to)
       raise ex
+    else
+      FileUtils.rm_rf(backup)
     end
-
-    FileUtils.mv(to, olddir)
-    begin
-      FileUtils.mv(newdir, to)
-    rescue => ex
-      FileUtils.mv(olddir, to)
-      raise ex
-    end
-
-    FileUtils.rm_rf(olddir)
   end
 end
