@@ -67,6 +67,7 @@ private
         'pack200' => @options[:pack200],
         'solaris' => 'false'
       }
+      options['project-version'] = @options[:version] if @options[:version]
       options = options.map {|k, v| ["--#{k}", "'#{v}'"] }.flatten
       ShellUtils.system! ['mvn', 'exec:java', '-Dant.home=' + ant_home, '-Dexec.args=' + options.join(' ')]
     end

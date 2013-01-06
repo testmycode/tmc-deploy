@@ -66,6 +66,8 @@ public class Main {
     private static final Log log = new SystemStreamLog();
     @Parameter(names = "--project-name", required = true)
     private String projectName;
+    @Parameter(names = "--project-version")
+    private String projectVersion;
     @Parameter(names = "--help", help = true)
     public boolean help = false;
     /**
@@ -180,9 +182,17 @@ public class Main {
 
         props.put("suite.nbi.product.uid", brandingToken);
 
-        props.put("suite.props.app.title", projectName);
-
-        // Could fill in suite.nbi.product.version[.short] too, but it's not required
+        if (projectVersion != null) {
+            props.put("suite.nbi.product.version.short", projectVersion);
+            String longVersion = projectVersion;
+            while (longVersion.split("\\.").length < 5) {
+                longVersion += ".0";
+            }
+            props.put("suite.nbi.product.version", projectVersion);
+            props.put("suite.props.app.title", projectName + " " + projectVersion);
+        } else {
+            props.put("suite.props.app.title", projectName);
+        }
 
         props.put("nbi.stub.location", new File(harnessDir, "nbi/stub").getAbsolutePath().replace("\\", "/"));
 
