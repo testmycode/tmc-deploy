@@ -11,6 +11,8 @@ ShellUtils.echo_on!
 class TmcDeploy
   @deployments = {}
 
+  include FileUtils::Verbose
+
   def self.main(args)
     if args.size == 0 || args.any? {|a| ['-h', '--help'].include?(a) }
       puts usage
@@ -75,21 +77,21 @@ EOS
   end
 
   def mv_if_exists(from, to)
-    FileUtils.mv(from, to) if File.exist?(from)
+    mv(from, to) if File.exist?(from)
   end
 
   def move_dir_over(from, to)
     randstr = (Random.new.rand * 1000).to_i
     backup = "#{to}.bak_#{randstr}"
 
-    FileUtils.mv(to, backup)
+    mv(to, backup)
     begin
-      FileUtils.mv(from, to)
+      mv(from, to)
     rescue => ex
-      FileUtils.mv(backup, to)
+      mv(backup, to)
       raise ex
     else
-      FileUtils.rm_rf(backup)
+      rm_rf(backup)
     end
   end
 end
