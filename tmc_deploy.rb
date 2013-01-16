@@ -88,6 +88,7 @@ EOS
     begin
       mv(from, to)
     rescue => ex
+      puts "Error. Recovering..."
       rm_rf(to)
       mv(backup, to)
       raise ex
