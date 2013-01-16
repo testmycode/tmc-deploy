@@ -25,6 +25,7 @@ class GitRepo
 
   def reset_hard(rev)
     Dir.chdir(@dir) do
+      ShellUtils.system! ['git', 'checkout', rev]
       ShellUtils.system! ['git', 'reset', '--hard', rev]
     end
     self
