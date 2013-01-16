@@ -4,6 +4,7 @@ require 'tmc_nb_plugin_builder'
 require 'git_repo'
 require 'pathname'
 require 'fileutils'
+require 'shellwords'
 require 'tmpdir'
 
 ShellUtils.echo_on!
@@ -95,5 +96,13 @@ EOS
     else
       rm_rf(backup)
     end
+  end
+
+  # Shell out to work around https://bugs.ruby-lang.org/issues/7707
+  def mv(from, to)
+    cmd = Shellwords.join ['mv', from, to]
+    puts cmd
+    system(cmd)
+    raise "Error: #{$?}" unless $?.success?
   end
 end
