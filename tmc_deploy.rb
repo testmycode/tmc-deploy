@@ -67,11 +67,11 @@ EOS
 
   def stage_nb_plugin(name, staging_dir)
     mv_if_exists("#{name}/build/updates", staging_dir + '/updates')
-    mv_if_exists("#{name}/dist/tmc_netbeans.zip", staging_dir + "/updates/#{name}.zip")
-    mv_if_exists("#{name}/dist/tmc_netbeans.app", staging_dir + "/updates/#{name}.app")
-    mv_if_exists("#{name}/dist/tmc_netbeans-linux.sh", staging_dir + "/updates/#{name}-linux.sh")
-    mv_if_exists("#{name}/dist/tmc_netbeans-macosx.tgz", staging_dir + "/updates/#{name}-macosx.tgz")
-    mv_if_exists("#{name}/dist/tmc_netbeans-windows.exe", staging_dir + "/updates/#{name}-windows.exe")
+    mv_if_exists("#{name}/dist/tmcbeans.zip", staging_dir + "/updates/#{name}.zip")
+    mv_if_exists("#{name}/dist/tmcbeans.app", staging_dir + "/updates/#{name}.app")
+    mv_if_exists("#{name}/dist/tmcbeans-linux.sh", staging_dir + "/updates/#{name}-linux.sh")
+    mv_if_exists("#{name}/dist/tmcbeans-macosx.tgz", staging_dir + "/updates/#{name}-macosx.tgz")
+    mv_if_exists("#{name}/dist/tmcbeans-windows.exe", staging_dir + "/updates/#{name}-windows.exe")
   end
 
   def mv_if_exists(from, to)
