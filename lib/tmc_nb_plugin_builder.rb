@@ -13,7 +13,9 @@ class TmcNbPluginBuilder
       :nbms => true,
       :zip => false,
       :installers => false,
-      :pack200 => true
+      :pack200 => true,
+      :is_application => true,
+      :plugin_update_site => false
     }.merge(options)
 
     @dir = Pathname(dir).realpath
@@ -30,11 +32,17 @@ class TmcNbPluginBuilder
 
   def build
     apply_tailoring if @tailoring_file
-    @ant_project.ant('clean', 'build')
-    @ant_project.ant('nbms') if @options[:nbms]
-    @ant_project.ant('build-zip') if zip_needed?
-    if @options[:installers]
-      build_installers
+    if @options[:is_application]
+      @ant_project.ant('clean', 'build')
+      @ant_project.ant('nbms') if @options[:nbms]
+      @ant_project.ant('build-zip') if zip_needed?
+      if @options[:installers]
+        build_installers
+      end
+    else
+      @ant_project.ant('clean', 'nbm')
+      @ant_project.ant('update-site') if @options[:plugin_update_site]
+      @ant_project.ant('build-zip') if zip_needed?
     end
   end
 
