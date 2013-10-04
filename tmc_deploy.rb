@@ -70,11 +70,19 @@ EOS
 
   def stage_nb_plugin(name, staging_dir)
     mv_if_exists("#{name}/build/updates", staging_dir + '/updates')
-    mv_if_exists("#{name}/dist/tmcbeans.zip", staging_dir + "/updates/#{name}.zip")
-    mv_if_exists("#{name}/dist/tmcbeans.app", staging_dir + "/updates/#{name}.app")
-    mv_if_exists("#{name}/dist/tmcbeans-linux.sh", staging_dir + "/updates/#{name}-linux.sh")
-    mv_if_exists("#{name}/dist/tmcbeans-macosx.tgz", staging_dir + "/updates/#{name}-macosx.tgz")
-    mv_if_exists("#{name}/dist/tmcbeans-windows.exe", staging_dir + "/updates/#{name}-windows.exe")
+  end
+
+  def stage_zip(name, staging_dir)
+    FileUtils.mkdir_p(staging_dir + "/installers")
+    mv_if_exists("#{name}/dist/tmcbeans.zip", staging_dir + "/installers/#{name}.zip")
+  end
+
+  def stage_installers(name, staging_dir)
+    FileUtils.mkdir_p(staging_dir + "/installers")
+    mv_if_exists("#{name}/dist/tmcbeans.app", staging_dir + "/installers/#{name}.app")
+    mv_if_exists("#{name}/dist/tmcbeans-linux.sh", staging_dir + "/installers/#{name}-linux.sh")
+    mv_if_exists("#{name}/dist/tmcbeans-macosx.tgz", staging_dir + "/installers/#{name}-macosx.tgz")
+    mv_if_exists("#{name}/dist/tmcbeans-windows.exe", staging_dir + "/installers/#{name}-windows.exe")
   end
 
   def mv_if_exists(from, to)
