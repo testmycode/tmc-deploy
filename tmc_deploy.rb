@@ -30,7 +30,7 @@ class TmcDeploy
     <<EOS
 Usage: #{$0} <deployment_name>...
 
-Available deployments: #{@deployments.keys.sort.join(' ')}.
+Available deployments: #{@deployments.keys.sort.join(' ')}
 
 EOS
   end
